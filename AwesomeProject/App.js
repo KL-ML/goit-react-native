@@ -1,5 +1,7 @@
 import { StyleSheet, View } from 'react-native';
-import RegistrationScreen from './assets/screens/RegistrationScreen';
+// import RegistrationScreen from './assets/screens/RegistrationScreen';
+import LoginScreen from './assets/screens/LoginScreen';
+
 import { useFonts } from 'expo-font';
 
 
@@ -14,9 +16,8 @@ export default function App() {
   }
   return (
     <View style={styles.containerMain}>
-      <RegistrationScreen />
-      {/* <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" /> */}
+      {/* <RegistrationScreen /> */}
+      <LoginScreen />
     </View>
   );
 }
