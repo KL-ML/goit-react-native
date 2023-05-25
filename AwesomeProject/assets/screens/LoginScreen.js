@@ -6,6 +6,8 @@ import {
     TouchableOpacity,
     ImageBackground,
     TextInput,
+    KeyboardAvoidingView,
+    Platform,
 } from "react-native";
 
 export default function LoginScreen() {
@@ -16,40 +18,47 @@ export default function LoginScreen() {
                 source={require('../images/BGImage.png')}
                 style={styles.background}
             >
-                <View style={styles.container}>
-                    <View style={styles.form}>
-                        <Text style={styles.title}>Увійти</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder={'Адреса електронної пошти'}
-                        />
-                        <View style={styles.passwordWrap}>
+                <KeyboardAvoidingView style={styles.container}
+                    behavior={Platform.OS == "ios" ? "padding" : "height"}
+                >
+                    <View
+                        style={styles.container}
+                    >
+                        <View style={styles.form}>
+                            <Text style={styles.title}>Увійти</Text>
+
                             <TextInput
                                 style={styles.input}
-                                secureTextEntry={true}
-                                placeholder={'Пароль'}
+                                placeholder={'Адреса електронної пошти'}
                             />
+                            <View style={styles.passwordWrap}>
+                                <TextInput
+                                    style={styles.input}
+                                    secureTextEntry={true}
+                                    placeholder={'Пароль'}
+                                />
+                                <TouchableOpacity
+                                    style={styles.showPassword}
+                                    activeOpacity={0.8}
+                                >
+                                    <Text style={styles.showPasswordText}>Показати</Text>
+                                </TouchableOpacity>
+                            </View>
                             <TouchableOpacity
-                                style={styles.showPassword}
+                                style={styles.formButton}
                                 activeOpacity={0.8}
                             >
-                                <Text style={styles.showPasswordText}>Показати</Text>
+                                <Text style={styles.buttonText}>Увійти</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.formLink}
+                                activeOpacity={0.8}
+                            >
+                                <Text style={styles.linkText}>Немає акаунту? Зареєструватися</Text>
                             </TouchableOpacity>
                         </View>
-                        <TouchableOpacity
-                            style={styles.formButton}
-                            activeOpacity={0.8}
-                        >
-                            <Text style={styles.buttonText}>Увійти</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.formLink}
-                            activeOpacity={0.8}
-                        >
-                            <Text style={styles.linkText}>Немає акаунту? Зареєструватися</Text>
-                        </TouchableOpacity>
                     </View>
-                </View>
+                </KeyboardAvoidingView>
             </ImageBackground>
         </View>
     );

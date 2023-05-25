@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     StyleSheet,
     Text,
@@ -6,18 +6,28 @@ import {
     TouchableOpacity,
     ImageBackground,
     TextInput,
+    KeyboardAvoidingView,
+    Platform,
 } from "react-native";
 import AddAvatarIcon from '../icons/addAvatar';
 
 export default function RegistrationScreen() {
-    
+    const [isShowKeyboard, setIsShowKeyboard] = useState(false);
     return (
         <View style={styles.containerBase}>
             <ImageBackground
                 source={require('../images/BGImage.png')}
                 style={styles.background}
             >
-                <View style={styles.container}>
+                <KeyboardAvoidingView style={styles.container}
+                    behavior={Platform.OS == "ios" ? "padding" : "height"}
+                >
+                    <View
+                        style={{
+                            ...styles.container,
+                            
+                        }}
+                    >
                     <View style={styles.form}>
                         <TouchableOpacity
                         style={styles.imageInput}
@@ -42,7 +52,8 @@ export default function RegistrationScreen() {
                             <TextInput
                                 style={styles.input}
                                 secureTextEntry={true}
-                                placeholder={'Пароль'}
+                                    placeholder={'Пароль'}
+                                    onFocus={() => setIsShowKeyboard(true )}
                             />
                             <TouchableOpacity
                                 style={styles.showPassword}
@@ -64,6 +75,7 @@ export default function RegistrationScreen() {
                         </TouchableOpacity>
                     </View>
                 </View>
+                </KeyboardAvoidingView>
             </ImageBackground>
         </View>
     );
