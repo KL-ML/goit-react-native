@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import RegistrationScreen from './assets/screens/RegistrationScreen';
+import RegistrationScreen from './screens/auth/RegistrationScreen';
 // import LoginScreen from './assets/screens/LoginScreen';
 
 import { useFonts } from 'expo-font';

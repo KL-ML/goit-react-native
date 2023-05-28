@@ -11,14 +11,30 @@ import {
     Keyboard,
     TouchableWithoutFeedback,
 } from "react-native";
-import AddAvatarIcon from '../icons/addAvatar';
 
-export default function RegistrationScreen() {
+const initialState = {
+    email: '',
+    password: '',
+}
+
+export default function LoginScreen() {
+
     const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+    const [state, setState] = useState(initialState);
+    const [onFocusInput, setOnFocusInput] = useState(false);
+
     const keyboardHide = () => {
         Keyboard.dismiss();
         setIsShowKeyboard(false);
     };
+
+    const submit = () => {
+        Keyboard.dismiss();
+        setIsShowKeyboard(false);
+        console.log(state);
+        setState(initialState);
+    }
+    
     return (
         <TouchableWithoutFeedback onPress={keyboardHide}>
             <View style={styles.containerBase}>
@@ -32,34 +48,34 @@ export default function RegistrationScreen() {
                         <View
                             style={styles.container}
                         >
-                            <View style={{ ...styles.form, flex: isShowKeyboard ? 0.80 : 0.67 }}>
-                                <TouchableOpacity
-                                    style={styles.imageInput}
-                                    activeOpacity={0.8}>
-                                    <TouchableOpacity
-                                        style={styles.addImageIcon}
-                                        activeOpacity={0.8}
-                                    >
-                                        <AddAvatarIcon />
-                                    </TouchableOpacity>
-                                </TouchableOpacity>
-                                <Text style={styles.title}>Реєстрація</Text>
+                            <View style={{ ...styles.form, flex: isShowKeyboard ? 0.50 : 0.55 }}>
+                                <Text style={styles.title}>Увійти</Text>
+
                                 <TextInput
                                     style={styles.input}
-                                    placeholder={'Логін'}
-                                    onFocus={() => setIsShowKeyboard(true)}
-                                />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder={'Електронна пошта'}
-                                    onFocus={() => setIsShowKeyboard(true)}
+                                    placeholder={'Адреса електронної пошти'}
+                                    value={state.email}
+                                    onFocus={() => {
+                                        setIsShowKeyboard(true);
+                                        setOnFocusInput(true);
+                                    }}
+                                    onBlur={() => setOnFocusInput(false)}
+                                    onChangeText={(value) =>
+                                        setState((prevState) => ({ ...prevState, email: value }))}
                                 />
                                 <View style={styles.passwordWrap}>
                                     <TextInput
                                         style={styles.input}
                                         secureTextEntry={true}
                                         placeholder={'Пароль'}
-                                        onFocus={() => setIsShowKeyboard(true)}
+                                        value={state.password}
+                                        onFocus={() => {
+                                            setIsShowKeyboard(true);
+                                            setOnFocusInput(true);
+                                        }}
+                                        onBlur={() => setOnFocusInput(false)}
+                                        onChangeText={(value) =>
+                                            setState((prevState) => ({ ...prevState, password: value }))}
                                     />
                                     <TouchableOpacity
                                         style={styles.showPassword}
@@ -71,13 +87,15 @@ export default function RegistrationScreen() {
                                 <TouchableOpacity
                                     style={styles.formButton}
                                     activeOpacity={0.8}
+                                    onPress={submit}
                                 >
-                                    <Text style={styles.buttonText}>Зареєструватися</Text>
+                                    <Text style={styles.buttonText}>Увійти</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
+                                    style={styles.formLink}
                                     activeOpacity={0.8}
                                 >
-                                    <Text style={styles.linkText}>Вже є аккаунт? Увійти</Text>
+                                    <Text style={styles.linkText}>Немає акаунту? Зареєструватися</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -100,35 +118,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-
     container: {
         flex: 1,
         justifyContent: 'flex-end',
         width: '100%',
         fontStyle: 'robotoRegular',
     },
-    imageInput: {
-        height: 120,
-        width: 120,
-        backgroundColor: '#F6F6F6',
-        borderRadius: 16,
-        position: 'absolute',
-        top: '-15%',
-    },
-    addImageIcon: {
-        height: 25,
-        width: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#ffffff',
-        borderRadius: 50,
-        position: 'absolute',
-        bottom: '10%',
-        right: '-10%',
-    },
     form: {
-        // flex: 0.67,
-        paddingTop: 92,
+        // flex: 0.55,
+        paddingTop: 32,
         paddingBottom: 45,
         paddingHorizontal: 16,
         alignItems: 'center',
@@ -161,6 +159,10 @@ const styles = StyleSheet.create({
         lineHeight: 19,
 
         color: '#212121',
+    },
+    inputStylesOnFocus: {
+        borderColor: '#FF6C00',
+        backgroundColor: '#ffffff',
     },
     passwordWrap: {
         position: 'relative',
