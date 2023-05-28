@@ -1,4 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
+
 import {
     StyleSheet,
     Text,
@@ -14,7 +16,7 @@ import {
 import InputComponent from "../../components/InputComponent";
 
 export default function LoginScreen() {
-
+    const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isPasswordHidden, setIsPasswordHidden] = useState(true);
@@ -77,12 +79,14 @@ export default function LoginScreen() {
                                     onPress={() => {
                                         handleFormSubmit();
                                         keyboardHide();
+                                        navigation.navigate("Home");
                                     }}
                                 >
                                     <Text style={styles.buttonText}>Увійти</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     activeOpacity={0.8}
+                                    onPress={() => navigation.navigate("Registration")}
                                 >
                                     <Text style={styles.linkText}>Немає акаунту? Зареєструватися</Text>
                                 </TouchableOpacity>

@@ -1,4 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
+
 import {
     StyleSheet,
     Text,
@@ -15,6 +17,7 @@ import AddAvatarIcon from '../../assets/icons/addAvatar';
 import InputComponent from "../../components/InputComponent";
 
 export default function RegistrationScreen() {
+    const navigation = useNavigation();
     const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -95,12 +98,14 @@ export default function RegistrationScreen() {
                                     onPress={() => {
                                         handleFormSubmit();
                                         keyboardHide();
+                                        navigation.navigate("Home");
                                     }}
                                 >
                                     <Text style={styles.buttonText}>Зареєструватися</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     activeOpacity={0.8}
+                                    onPress={() => navigation.navigate("Login")}
                                 >
                                     <Text style={styles.linkText}>Вже є аккаунт? Увійти</Text>
                                 </TouchableOpacity>
