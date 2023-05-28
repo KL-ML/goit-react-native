@@ -1,6 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+
 import RegistrationScreen from './screens/auth/RegistrationScreen';
-// import LoginScreen from './assets/screens/LoginScreen';
+// import LoginScreen from './screens/auth/LoginScreen';
 
 import { useFonts } from 'expo-font';
 
@@ -15,15 +15,10 @@ export default function App() {
     return null;
   }
   return (
-    <View style={styles.containerMain}>
+    <>
       <RegistrationScreen />
       {/* <LoginScreen /> */}
-    </View>
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  containerMain: {
-    flex: 1,
-  },
-});

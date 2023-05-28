@@ -5,41 +5,37 @@ import {
     View,
     TouchableOpacity,
     ImageBackground,
-    TextInput,
     KeyboardAvoidingView,
     Platform,
     Keyboard,
     TouchableWithoutFeedback,
 } from "react-native";
 
-const initialState = {
-    email: '',
-    password: '',
-}
+import InputComponent from "../../components/InputComponent";
 
 export default function LoginScreen() {
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isPasswordHidden, setIsPasswordHidden] = useState(true);
     const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-    const [state, setState] = useState(initialState);
-    const [onFocusInput, setOnFocusInput] = useState(false);
-
+    
     const keyboardHide = () => {
         Keyboard.dismiss();
         setIsShowKeyboard(false);
     };
 
-    const submit = () => {
-        Keyboard.dismiss();
-        setIsShowKeyboard(false);
-        console.log(state);
-        setState(initialState);
+    const handleFormSubmit = () => {
+        console.log({ email, password });
+        setEmail('');
+        setPassword('');
     }
     
     return (
         <TouchableWithoutFeedback onPress={keyboardHide}>
             <View style={styles.containerBase}>
                 <ImageBackground
-                    source={require('../images/BGImage.png')}
+                    source={require('../../assets/images/BGImage.png')}
                     style={styles.background}
                 >
                     <KeyboardAvoidingView style={styles.container}
@@ -51,35 +47,26 @@ export default function LoginScreen() {
                             <View style={{ ...styles.form, flex: isShowKeyboard ? 0.50 : 0.55 }}>
                                 <Text style={styles.title}>Увійти</Text>
 
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder={'Адреса електронної пошти'}
-                                    value={state.email}
-                                    onFocus={() => {
-                                        setIsShowKeyboard(true);
-                                        setOnFocusInput(true);
-                                    }}
-                                    onBlur={() => setOnFocusInput(false)}
-                                    onChangeText={(value) =>
-                                        setState((prevState) => ({ ...prevState, email: value }))}
+                                <InputComponent
+                                    value={email}
+                                    setValue={setEmail}
+                                    placeholder={'Електронна пошта'}
+                                    onSubmitEditing={handleFormSubmit}
+                                    keyboardShow={setIsShowKeyboard}
                                 />
                                 <View style={styles.passwordWrap}>
-                                    <TextInput
-                                        style={styles.input}
-                                        secureTextEntry={true}
+                                    <InputComponent
+                                        value={password}
+                                        setValue={setPassword}
                                         placeholder={'Пароль'}
-                                        value={state.password}
-                                        onFocus={() => {
-                                            setIsShowKeyboard(true);
-                                            setOnFocusInput(true);
-                                        }}
-                                        onBlur={() => setOnFocusInput(false)}
-                                        onChangeText={(value) =>
-                                            setState((prevState) => ({ ...prevState, password: value }))}
+                                        onSubmitEditing={handleFormSubmit}
+                                        secureTextEntry={isPasswordHidden}
+                                        keyboardShow={setIsShowKeyboard}
                                     />
                                     <TouchableOpacity
                                         style={styles.showPassword}
                                         activeOpacity={0.8}
+                                        onPress={() => setIsPasswordHidden(!isPasswordHidden)}
                                     >
                                         <Text style={styles.showPasswordText}>Показати</Text>
                                     </TouchableOpacity>
@@ -87,12 +74,14 @@ export default function LoginScreen() {
                                 <TouchableOpacity
                                     style={styles.formButton}
                                     activeOpacity={0.8}
-                                    onPress={submit}
+                                    onPress={() => {
+                                        handleFormSubmit();
+                                        keyboardHide();
+                                    }}
                                 >
                                     <Text style={styles.buttonText}>Увійти</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={styles.formLink}
                                     activeOpacity={0.8}
                                 >
                                     <Text style={styles.linkText}>Немає акаунту? Зареєструватися</Text>
@@ -125,7 +114,6 @@ const styles = StyleSheet.create({
         fontStyle: 'robotoRegular',
     },
     form: {
-        // flex: 0.55,
         paddingTop: 32,
         paddingBottom: 45,
         paddingHorizontal: 16,
@@ -142,27 +130,6 @@ const styles = StyleSheet.create({
         color: '#212121',
 
         marginBottom: 32,
-    },
-    input: {
-        backgroundColor: '#F6F6F6',
-        marginBottom: 16,
-        width: '100%',
-        height: 50,
-        borderColor: '#E8E8E8',
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingTop: 16,
-        paddingLeft: 16,
-        paddingRight: 16,
-        paddingBottom: 15,
-        fontSize: 16,
-        lineHeight: 19,
-
-        color: '#212121',
-    },
-    inputStylesOnFocus: {
-        borderColor: '#FF6C00',
-        backgroundColor: '#ffffff',
     },
     passwordWrap: {
         position: 'relative',
