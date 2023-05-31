@@ -8,16 +8,16 @@ import {
   Image,
 } from 'react-native';
 
-// import PostList from '../../components/Post/PostList';
+import PostList from '../../components/Post/PostList';
 
 export default function Home() {
-  // const [posts, setPosts] = useState([]);
+//   const [posts, setPosts] = useState([]);
 
-  // useEffect(() => {
-  //   if (route.params) {
-  //     setPosts(prevState => [...prevState, route.params]);
-  //   }
-  // }, [route.params]);
+//   useEffect(() => {
+//     if (route.params) {
+//       setPosts(prevState => [...prevState, route.params]);
+//     }
+//   }, [route.params]);
 
   // const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
@@ -44,8 +44,10 @@ export default function Home() {
         </View>
 
         <View style={styles.containerPosts}>
-          {/* <PostList posts={posts} /> */}
-          <Text>Post List</Text>
+          <PostList
+            // posts={posts}
+          />
+          {/* <Text>Post List</Text> */}
         </View>
       </View>
     </TouchableWithoutFeedback>
